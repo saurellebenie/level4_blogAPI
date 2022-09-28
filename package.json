@@ -1,0 +1,25 @@
+{
+  "name": "sinclaire-blog",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This is blog web for Mr Kambang and by Mr Kambang",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "BLOG",
+    "USERS",
+    "POSTS",
+    "API",
+    "NONO",
+    "SOCIAL",
+    "MEDIA"
+  ],
+  "author": "Eng Kambang Sinclaire",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
