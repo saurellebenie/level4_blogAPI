@@ -14,35 +14,11 @@ userRouter.get("/:email", UserController.getUserByEmail);
 userRouter.post("/add", UserController.addUser);
 
 //   update
-// userRouter.put("/user/:email", 
+userRouter.put("/user/:email", UserController.updateUser);
 
 // });
 //Delete User
 
-// userRouter.delete("/user/:email", (req, res) => {
-
-//     const found = users.some(user => user.id === parseInt(req.params.id))
-
-//     if (found) {
-
-//         users = users.filter(user => user.id !== (req.params.id))
-
-//         res.json({
-
-//             msg: "User deleted",
-
-//             users
-
-//         });
-
-//     } else {
-
-//         res.sendStatus(200);
-
-//     }
-
-// });
-
-
+userRouter.delete("/user/:email", UserController.deleUser);
 
 export default userRouter;

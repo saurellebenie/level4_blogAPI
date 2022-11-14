@@ -9,5 +9,6 @@ const Comments = [
         post_id: 2,
         message: "Thanks for writing this amazing content"
     }
+    // https://codepen.io/asmirbe/pen/XWqXwBp . 
 ]
 export default Comments;

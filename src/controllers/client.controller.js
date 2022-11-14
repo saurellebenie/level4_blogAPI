@@ -1,66 +1,50 @@
 import { Users } from "../modules/users.module.js";
+import userModel from "../models/user.model.js";
 
 const UserController = {};
 
-UserController.getUsers = (req, res) => {
-    res.send(Users);
+UserController.getUsers = async (req, res) => {
+    const dbUsers = await userModel.find();
+    console.log(dbUsers);
+    res.send(dbUsers);
 }
 
-UserController.getUserByEmail = (req, res) => {
-    const params = req.params.email;
-    console.log("param is", params);
-    const User = Users.filter((User) => User.email == params);
-
-    console.log(User[0]);
-    res.send(User);
+UserController.getUserByEmail = async (req, res) => {
+    const params = req.params.id;
+    
+    const newUser = await userModel.find({email:params});
+    res.send(newUser);
 }
 
-UserController.addUser = (req, res) => {
+UserController.addUser = async(req, res) => {
     const newUser = req.body;
     newUser.createdAt = new Date(Date.now());
     newUser.isLoggedIn = true;
-    Users.push(newUser);
+    const newDbUser = await userModel.create(newUser)
 
     res.status(200).send({
         status: 200,
-        message: "User account successful created",
+        message: "User account successfully created",
         user: newUser
     });
+    console.log("The received info is ", newUser);
 }
 
-// UserController.editUser = (req, res) => {
-
-//     const found = Users.filter(user => user.email == req.params.email);
-//     console.log(found);
-
-//     if (found) {
-
-//         const updateUser = req.body;
-
-//         Users.map(user => {
-
-//             if (user.email == req.params.email) {
-
-//                 user.name = updateUser.name ? updateUser.name : user.name;
-
-//                 user.id = updateUser.id ? updateUser.id : user.id;
-
-//                 user.adress = updateUser.adress ? updateUser.adress : user.adress;
-
-//                 res.status(200).send({ message: "User updated", user });
-
-//             }
-
-//         });
-
-//     } else {
-
-//         res.status(200).send({
-//             status: 200,
-//             message: "User account not found",
-//         });
-
-//     }
-// }
+UserController.updateUser = async(req,res) =>{
+    const email= req.params.email
+    const options = { new: true };
+    const updateUser = req.body;
+    const newDbUser = await userModel.findOneAndUpdate(email,updateUser,options);
+    console.log("voyon:",newDbUser);
+    res.send(newDbUser)
+}
+UserController.deleUser = async(req,res) =>{
+    const email= req.params.email;
+    const deleUser = await userModel.findOneAndDelete(email)
+    res.status(200).send({
+        status: 200,
+        message: "User account successfully deleted",
+    });
+}
 
 export default UserController;
