@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
 
-    title:{
+    title: {
         type: String,
         require: true,
     },
-    desc:{
+    desc: {
         type: String,
         require: true,
     },
@@ -14,31 +14,41 @@ const postSchema = new mongoose.Schema({
         type: String,
         require: false,
     },
-    nlikes:{
+    nlikes: {
         type: Number,
     },
     // published: Boolean,
-    comments: [{
-        type: String,
-      }],
+    comments: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Comment"
+        }
+      ],
     // author:{
     //     type: Number,
     //     // unique: true,
     //     require: false,
     // },
-   author : {
-    type: String
-   }
-   
+    author: [{
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+    }],
+    likes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "Like"
+        }
+    ]
+
 
 },
-{ timestamps: true, }
+    { timestamps: true, }
 )
-postSchema.method("toJSON", function() {
+postSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
-  });
+});
 
-const postsModel = mongoose.model("posts", postSchema);
+const postsModel = mongoose.model("Post", postSchema);
 export default postsModel;

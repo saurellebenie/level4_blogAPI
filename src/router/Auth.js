@@ -1,6 +1,6 @@
 import express from "express"
 const authRouter = express.Router()
-
+import UserController from "../controllers/client.controller.js";
 import userModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
@@ -44,5 +44,7 @@ authRouter.post('/login', async(req,res) => {
        res.status(500).json(error); 
     }
 })
+// get All Users endpoint
+authRouter.get("/get", UserController.getUsers);
 
 export default authRouter;

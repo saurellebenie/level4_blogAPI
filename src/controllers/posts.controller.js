@@ -15,12 +15,18 @@ postController.getAllpost = async (request, response) => {
 }
 // get post by id
 postController.getPostById = async (req, res) => {
-    try {
-      const blog = await postsModel.findById(req.params.id);
-      res.json({ status: "success", blog});
-    } catch (err) {
-      res.status(500).json({ status: "error", message: err.message });
-    }
+   const id = req.params.id;
+
+   await postsModel.findById(id)
+   .then(data =>{
+    if(!data)
+    res.status(404).send({message: 'post not found'})
+    else res.send(data)
+   })
+   .catch(e =>{
+    res.status(500).send({message: 'error'})
+   })
+    
   }
 // add post
 postController.addPost = async (req, res) => {
